@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: '3'
+
+tasks:
+  default:
+    desc: List available tasks
+    cmds:
+      - task --list
+
+  cleanup:
+    desc: Clean up Hugging Face cache and temporary files
+    cmds:
+      - huggingface-cli cache-scan-tmp-delete
+      - find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+      - find . -type d -name ".pytest_cache" -exec rm -rf {} + 2>/dev/null || true
+      - echo "✓ Cleanup completed"
+
+  cleanup:hf:
+    desc: Show Hugging Face cache usage
+    cmds:
+      - huggingface-cli cache-system
+
+  cleanup:models:
+    desc: Delete all Hugging Face cached models
+    cmds:
+      - rm -rf ~/.cache/huggingface/hub/
+      - echo "✓ Hugging Face models cache cleared"
+
+  run:one:
+    desc: Run the Phi-3 mini example
+    cmds:
+      - uv run chapterone/one.py
+
+  run:main:
+    desc: Run the main script
+    cmds:
+      - uv run chapterone/main.py
+
+  test:
+    desc: Verify project setup and dependencies
+    cmds:
+      - python --version
+      - pip list | grep -E "transformers|torch|python-dotenv"
