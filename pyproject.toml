@@ -9,6 +9,7 @@ dependencies = [
     "cohere>=5.20.5",
     "fastapi>=0.129.0",
     "huggingface-hub>=1.4.1",
+    "numpy>=2.2.6",
     "openai>=2.21.0",
     "python-dotenv>=1.2.1",
     "torch>=2.10.0",
